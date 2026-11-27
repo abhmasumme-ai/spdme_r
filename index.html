@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cricket Control Panel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header>
+  <div class="brand"><i class="fa-solid fa-display"></i> Control panel</div>
+  <div class="ctrl">
+    <div>Entity: <span id="entityStatus" style="color:var(--yellow);font-weight:600;">○ Disconnected</span></div>
+    <div>Launch Browser<button id="bLaunch" title="Launch Browser"><i class="fa-solid fa-rocket"></i></button></div>
+    <div>Kill<button id="bKill" title="Kill-switch: stop all bets"><i class="fa-solid fa-ban"></i></button></div>
+    <div>Stop<button id="bStop" title="Stop"><i class="fa-solid fa-power-off"></i></button></div>
+  </div>
+</header>
+
+<div class="layout">
+  <section class="admin-section">
+    <div>
+      <div class="tag"><i class="fa-solid fa-compass"></i> Navigation</div>
+      <form class="box" id="adminForm" autocomplete="off">
+
+        <!-- ═══ Stake Control ═══ -->
+        <label for="stakeInput">BET STAKE (৳)</label>
+        <input id="stakeInput" type="number" min="1" step="1" placeholder="15">
+
+        <div class="stake-presets">
+          <button type="button" class="stake-preset" data-stake="15">15</button>
+          <button type="button" class="stake-preset" data-stake="20">20</button>
+          <button type="button" class="stake-preset" data-stake="100">100</button>
+          <button type="button" class="stake-preset" data-stake="500">500</button>
+          <button type="button" class="stake-preset" data-stake="1000">1000</button>
+          <button type="button" class="stake-preset" data-stake="2000">2000</button>
+          <button type="button" class="stake-preset" data-stake="5000">5000</button>
+        </div>
+
+        <button type="button" id="applyStakeBtn" class="launch-btn" style="margin-top:6px">
+          <i class="fa-solid fa-coins"></i> APPLY STAKE
+        </button>
+
+        <div style="margin: 10px 0 4px; border-top: 1px dashed var(--border-color);"></div>
+
+        <label for="site">WEBSITE URL <span style="color:var(--red)">*</span></label>
+        <input id="site" name="site" class="url-input" value="https://melbet-7626.pro" placeholder="https://...">
+        <button type="button" id="submitSiteBtn" class="launch-btn">
+          <i class="fa-solid fa-rocket"></i> SUBMIT &amp; LAUNCH
+        </button>
+
+        <label for="matchUrl">MATCH URL</label>
+        <input id="matchUrl" class="url-input" placeholder="Copy from Chrome URL bar">
+        <button type="button" id="verifyBtn" class="verify-btn">VERIFY</button>
+
+        <label for="matchKey">MELBET MATCH KEY</label>
+        <input id="matchKey" name="matchId" readonly placeholder="Open a match in browser">
+
+        <label for="entityKey">ENTITY MATCH KEY</label>
+        <input id="entityKey" name="entityMatchId" readonly placeholder="Click a fixture below">
+
+        <label for="type">MATCH FORMAT</label>
+        <input id="type" name="type" readonly>
+
+        <button type="button" id="lockBtn" class="lock-btn unlocked">
+          <i class="fa-solid fa-lock-open"></i> LOCK
+        </button>
+
+        <div class="option-group" data-group="Delivery">
+          <div class="option-row">
+            <label for="delivery">DELIVERY RUN OVER/UNDER</label>
+            <input type="checkbox" class="radio-look" id="delivery" data-target="ddDelivery" data-kind="delivery">
+          </div>
+          <div class="dropdown" id="ddDelivery" hidden>
+            <div class="btns">
+              <button type="button" class="submit mulling-btn" data-kind="delivery">Mulling</button>
+              <button type="button" class="stop" data-kind="delivery">Stop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group" data-group="Wicket">
+          <div class="option-row">
+            <label for="wk">WICKET IN FALL</label>
+            <input type="checkbox" class="radio-look" id="wk" data-target="ddWicket" data-kind="wicket">
+          </div>
+          <div class="dropdown" id="ddWicket" hidden>
+            <div class="btns">
+              <button type="button" class="submit mulling-btn" data-kind="wicket">Mulling</button>
+              <button type="button" class="stop" data-kind="wicket">Stop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="option-group" data-group="Batsman">
+          <div class="option-row">
+            <label for="bat">BATSMAN UNDER</label>
+            <input type="checkbox" class="radio-look" id="bat" data-target="ddBatsman" data-kind="batsman">
+          </div>
+          <div class="dropdown" id="ddBatsman" hidden>
+            <div class="btns">
+              <button type="button" class="submit mulling-btn" data-kind="batsman">Mulling</button>
+              <button type="button" class="stop" data-kind="batsman">Stop</button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="right-area">
+    <div class="left-stack">
+      <div>
+        <div class="tag"><i class="fa-solid fa-video"></i> Viewport</div>
+        <div class="viewport">
+          <div>
+            <div class="match-teams" id="matchTeams">-- vs --</div>
+            <div class="team" id="team">--</div>
+            <div class="score" id="score">0 - 0</div>
+            <div class="over" id="overTxt">0.0 OVER</div>
+          </div>
+          <div class="vp-right">
+            <div class="status" id="status">Waiting for data...</div>
+            <div class="ball" id="ball"><span>-</span></div>
+            <div class="overbar">
+              <div class="overno" id="overNo">-- OVER</div>
+              <div class="overdots" id="overDots"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="tag">
+          <i class="fa-regular fa-file-lines"></i> Fixture
+          <button class="refresh-fixtures" id="refreshFixtures" type="button">Refresh</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>MATCH KEY</th><th>TEAMS NAME</th><th>MATCH FORMAT</th><th>STATUS</th></tr>
+            </thead>
+            <tbody id="fixture"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="tag"><i class="fa-solid fa-terminal"></i> Terminal</div>
+        <ul class="terminal" id="terminal"></ul>
+      </div>
+    </div>
+
+    <div class="right-sidebar">
+      <div>
+        <div class="tag"><i class="fa-regular fa-hand-pointer"></i> Event movement</div>
+        <div class="bars">
+          <div class="bar"><span id="barClickTxt">0ms</span><i id="barClick" style="height:20px;background:var(--yellow)"></i>Click</div>
+          <div class="bar"><span id="barOddsTxt">0ms</span><i id="barOdds" style="height:20px;background:var(--cyan)"></i>Odds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

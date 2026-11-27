@@ -1,0 +1,17 @@
+# secrets
+.env
+*.env
+
+# browser profiles (chrome lock files)
+profiles/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+
+# os
+.DS_Store
+Thumbs.db
